@@ -4,19 +4,27 @@ const phrase = document.getElementById("phrase");
 const btnReset = document.querySelector(".btn__reset");
 const overlay = document.getElementById("overlay");
 const buttons = document.querySelectorAll(".keyrow button");
-const missed = 0;
-const match = 0;
+const title = document.querySelector(".title");
+const liveheart = document.querySelectorAll(".tries img");
+let missed = 0;
 const phrases = [
-  "Ride a bike",
-  "Tougher than the rest",
-  "You are the reason",
-  "Boulevard of broken dreams",
-  "Name of the game",
+  "ride a bike",
+  "tougher than the rest",
+  "you are the reason",
+  "boulevard of broken dreams",
+  "name of the game",
 ];
+console.log(buttons);
 
 //START GAME LISTENER BUTTON
 btnReset.addEventListener("click", () => {
-  overlay.style.display = "none";
+  if (btnReset.textContent === "Start Game") {
+    startGame();
+    overlay.style.display = "none";
+  } else {
+    refreshPage();
+    overlay.style.display = "none";
+  }
 });
 
 //RANDOM PHRASE GENERATOR
@@ -26,46 +34,82 @@ function getRandomPhraseAsArray(a) {
   return index;
 }
 
-const randomPhrase = getRandomPhraseAsArray(phrases);
-console.log(randomPhrase);
 
 //ADD PHRASE TO DISPLAY
-function addPhraseToDisplay() {
-  for (let i = 0; i < randomPhrase.length; i++) {
+function addPhraseToDisplay(b) {
+  for (let i = 0; i < b.length; i++) {
     const li = document.createElement("li");
     const ul = document.getElementsByTagName("ul");
     ul[0].appendChild(li);
-    if (randomPhrase[i] === " ") {
+    if (b[i] === " ") {
       li.className = "space";
     } else {
       li.className = "letter";
-      li.innerHTML = randomPhrase[i]; //For Horea
+      li.innerHTML = b[i]; 
     }
   }
 }
 
-addPhraseToDisplay();
 
-//CHECK LETTER
+
+//CHECK LETTERS... AND THE REST SAINT JACOB KNOWS! 
 function checkLetter(event) {
-  console.log(event.target);
+  // console.log(event.target);
   const liList = document.querySelectorAll("ul li.letter");
   console.log(liList);
+  const liListString = [...liList].map(ele => ele.innerHTML);
+  console.log(liListString);
   const btnLetter = event.target.innerHTML;
+  const btn = event.target;
+  console.log(btn);
   console.log(btnLetter);
-
-  // console.log(liList);
-
-  const match = "";
+  let match = liListString.includes(btnLetter);
+  console.log(match);
   for (let i = 0; i < buttons.length; i++) {
-    console.log(liList[i]);
-    if (liList[i].innerHTML === btnLetter) {
+    if (liList[i]?.innerHTML === btnLetter) {
       liList[i].classList.add("show");
-    }
+      btn.className = "chosen";
+      btn.setAttribute("disabled", "");
+    } 
   }
-  // return match;
+    if (!match) {
+      liveheart[missed].src = "images/lostHeart.png";
+      missed++;
+      console.log(missed, 'dis');
+      btn.className = "wrong";
+      btn.setAttribute("disabled", "");
+    }
+
+    if (missed === 5) {
+      overlay.style.display = "flex";
+      overlay.className = "lose";
+      title.textContent = "You Lose!";
+      btnReset.textContent = "Reset";
+      liList.forEach((e)=>{
+        e.classList.remove("show");        
+      });
+    
+    }
 }
 
 buttons.forEach((e) => {
   e.addEventListener("click", checkLetter);
 });
+
+function refreshPage () {
+       overlay.style.display = "none";
+      buttons.forEach((e)=>{
+        e.className = "";
+        e.removeAttribute("disabled");
+      });
+      missed = 0;
+
+      for( let i=0; i < 5; i++){
+        liveheart[i].src = "images/liveHeart.png";
+      }   
+    };
+    
+function startGame() {
+  const phraseArray = getRandomPhraseAsArray(phrases);
+  addPhraseToDisplay(phraseArray);
+};
