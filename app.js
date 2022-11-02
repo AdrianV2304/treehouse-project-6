@@ -45,7 +45,11 @@ function addPhraseToDisplay(b) {
       li.className = "space";
     } else {
       li.className = "letter";
+<<<<<<< HEAD
       li.innerHTML = b[i]; 
+=======
+      li.innerHTML = randomPhrase[i]; 
+>>>>>>> 3f0c98c4282128243fa03d608373a211f3df8c29
     }
   }
 }
@@ -72,6 +76,7 @@ function checkLetter(event) {
       btn.setAttribute("disabled", "");
     } 
   }
+<<<<<<< HEAD
     if (!match) {
       liveheart[missed].src = "images/lostHeart.png";
       missed++;
@@ -90,12 +95,22 @@ function checkLetter(event) {
       });
     
     }
+=======
+
+    if (!match) {
+      liveheart[missed].src = "images/lostHeart.png";
+      missed++;
+      btn.className = "wrong";
+      btn.setAttribute("disabled", "");
+    }
+>>>>>>> 3f0c98c4282128243fa03d608373a211f3df8c29
 }
 
 buttons.forEach((e) => {
   e.addEventListener("click", checkLetter);
 });
 
+<<<<<<< HEAD
 function refreshPage () {
        overlay.style.display = "none";
       buttons.forEach((e)=>{
@@ -113,3 +128,6 @@ function startGame() {
   const phraseArray = getRandomPhraseAsArray(phrases);
   addPhraseToDisplay(phraseArray);
 };
+=======
+
+>>>>>>> 3f0c98c4282128243fa03d608373a211f3df8c29
