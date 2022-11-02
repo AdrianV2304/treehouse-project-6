@@ -4,14 +4,15 @@ const phrase = document.getElementById("phrase");
 const btnReset = document.querySelector(".btn__reset");
 const overlay = document.getElementById("overlay");
 const buttons = document.querySelectorAll(".keyrow button");
-const missed = 0;
-const match = 0;
+const title = document.querySelector(".title");
+const liveheart = document.querySelectorAll(".tries img");
+let missed = 0;
 const phrases = [
-  "Ride a bike",
-  "Tougher than the rest",
-  "You are the reason",
-  "Boulevard of broken dreams",
-  "Name of the game",
+  "ride a bike",
+  "tougher than the rest",
+  "you are the reason",
+  "boulevard of broken dreams",
+  "name of the game",
 ];
 
 //START GAME LISTENER BUTTON
@@ -39,7 +40,7 @@ function addPhraseToDisplay() {
       li.className = "space";
     } else {
       li.className = "letter";
-      li.innerHTML = randomPhrase[i]; //For Horea
+      li.innerHTML = randomPhrase[i]; 
     }
   }
 }
@@ -48,24 +49,35 @@ addPhraseToDisplay();
 
 //CHECK LETTER
 function checkLetter(event) {
-  console.log(event.target);
+  // console.log(event.target);
   const liList = document.querySelectorAll("ul li.letter");
   console.log(liList);
+  const liListString = [...liList].map(ele => ele.innerHTML);
+  console.log(liListString);
   const btnLetter = event.target.innerHTML;
+  const btn = event.target;
+  console.log(btn);
   console.log(btnLetter);
-
-  // console.log(liList);
-
-  const match = "";
+  let match = liListString.includes(btnLetter);
+  console.log(match);
   for (let i = 0; i < buttons.length; i++) {
-    console.log(liList[i]);
-    if (liList[i].innerHTML === btnLetter) {
+    if (liList[i]?.innerHTML === btnLetter) {
       liList[i].classList.add("show");
-    }
+      btn.className = "chosen";
+      btn.setAttribute("disabled", "");
+    } 
   }
-  // return match;
+
+    if (!match) {
+      liveheart[missed].src = "images/lostHeart.png";
+      missed++;
+      btn.className = "wrong";
+      btn.setAttribute("disabled", "");
+    }
 }
 
 buttons.forEach((e) => {
   e.addEventListener("click", checkLetter);
 });
+
+

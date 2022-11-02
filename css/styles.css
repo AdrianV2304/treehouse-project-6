@@ -111,6 +111,13 @@ button {
   color: #FFFFFF;
 }
 
+.wrong {
+  background: red;
+  border-radius: 5px;
+  font-size: var(--font-size-medium);
+  color: yellow;
+}
+
 .btn__reset {
   cursor: pointer;
   padding: 8px;
