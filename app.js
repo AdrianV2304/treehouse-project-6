@@ -49,8 +49,7 @@ function addPhraseToDisplay(b) {
   }
 }
 
-//CHECK LETTERS... AND THE REST SAINT JACOB KNOWS!
-
+//CHECK LETTERS
 buttons.forEach((e) => {
   e.addEventListener("click", checkLetter);
 });
@@ -77,7 +76,7 @@ function checkLetter(event) {
     btn.className = "wrong";
     btn.setAttribute("disabled", "");
   }
-
+  //RESET GAME
   function reset() {
     btnReset.textContent = "Reset";
     overlay.style.display = "flex";
@@ -98,7 +97,7 @@ function checkLetter(event) {
     }
     missed = 0;
   }
-
+  // WIN - LOSE CONDITIONALS
   if (missed === 5) {
     overlay.className = "lose";
     title.textContent = "You Lose!";
